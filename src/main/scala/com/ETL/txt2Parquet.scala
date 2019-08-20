@@ -1,6 +1,8 @@
 package com.ETL
 
-import com.Utils.Utils2Type
+import com.Utils.{SchemaUtils, Utils2Type}
+import org.apache.spark.sql.{Row, SQLContext}
+import org.apache.spark.{SparkConf, SparkContext}
 
 
 /**
