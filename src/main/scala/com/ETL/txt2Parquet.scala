@@ -4,20 +4,19 @@ import com.Utils.{SchemaUtils, Utils2Type}
 import org.apache.spark.sql.{Row, SQLContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
-
 /**
   * 格式转换
   */
 object txt2Parquet {
   def main(args: Array[String]): Unit = {
-    System.setProperty("hadoop.home.dir", "D:\\Huohu\\下载\\hadoop-common-2.2.0-bin-master")
+//    System.setProperty("hadoop.home.dir", "D:\\Huohu\\下载\\hadoop-common-2.2.0-bin-master")
     // 判断路径是否正确
-    if(args.length != 2){
-      println("目录参数不正确，退出程序")
-      sys.exit()
-    }
+//    if(args.length != 2){
+//      println("目录参数不正确，退出程序")
+//      sys.exit()
+//    }
     // 创建一个集合保存输入和输出目录
-    val Array(inputPath,outputPath) = args
+//    val Array(inputPath,outputPath) = Array("dir/2016-10-01_06_p1_invalid.1475274123982.log","D:\\data\res")
     val conf = new SparkConf().setAppName(this.getClass.getName).setMaster("local[*]")
       // 设置序列化方式 采用Kyro序列化方式，比默认序列化方式性能高
       .set("spark.serializer","org.apache.spark.serializer.KryoSerializer")
@@ -27,11 +26,12 @@ object txt2Parquet {
     // 设置压缩方式 使用Snappy方式进行压缩
     sQLContext.setConf("spark.sql.parquet.compression.codec","snappy")
     // 进行数据的读取，处理分析数据
-    val lines = sc.textFile(inputPath)
+    val lines = sc.textFile("dir/2016-10-01_06_p1_invalid.1475274123982.log")
     // 按要求切割，并且保证数据的长度大于等于85个字段，
     // 如果切割的时候遇到相同切割条件重复的情况下，需要切割的话，那么后面需要加上对应匹配参数
     // 这样切割才会准确 比如 ,,,,,,, 会当成一个字符切割 需要加上对应的匹配参数
-    val rowRDD = lines.map(t=>t.split(",",t.length)).filter(_.length >= 85)
+    val rowRDD = lines.map(t=>t.split(",",t.length))
+      .filter(_.length >= 85)
       .map(arr=>{
         Row(
           arr(0),
@@ -106,27 +106,26 @@ object txt2Parquet {
           arr(69),
           arr(70),
           arr(71),
-          arr(73),
-          Utils2Type.toInt(arr(76)),
+          arr(72),
+          Utils2Type.toInt(arr(73)),
+          Utils2Type.toDouble(arr(74)),
+          Utils2Type.toDouble(arr(75)),
+          Utils2Type.toDouble(arr(76)),
           Utils2Type.toDouble(arr(77)),
           Utils2Type.toDouble(arr(78)),
-          Utils2Type.toDouble(arr(79)),
-          Utils2Type.toDouble(arr(80)),
-          Utils2Type.toDouble(arr(81)),
+          arr(79),
+          arr(80),
+          arr(81),
           arr(82),
           arr(83),
-          arr(84),
-          arr(85),
-          arr(86),
-          Utils2Type.toInt(arr(87))
+          Utils2Type.toInt(arr(84))
         )
       })
     // 构建DF
     val df = sQLContext.createDataFrame(rowRDD,SchemaUtils.structtype)
     // 保存数据
-    df.write.parquet(outputPath)
+    df.write.parquet("dir/out")
     sc.stop()
 
   }
 }
-

@@ -7,15 +7,9 @@
     <groupId>com.al</groupId>
     <artifactId>gp22MP</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <!--<dependency>-->
-    <!--<groupId>org.apache</groupId>-->
-    <!--<artifactId>spark-assembly-1.6.0-hadoop-2.6.0</artifactId>-->
-    <!--<version>1.6.0</version>-->
-    <!--</dependency>-->
-
-
 
     <dependencies>
+
         <!--<dependency>-->
         <!--<groupId>org.apache</groupId>-->
         <!--<artifactId>spark-assembly-1.6.0-hadoop-2.6.0</artifactId>-->
@@ -111,9 +105,6 @@
             <version>1.2.58</version>
         </dependency>
 
-
     </dependencies>
-
-
 
 </project>
