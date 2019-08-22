@@ -1,9 +1,8 @@
 package com.Analysis
 
-import java.io
+
 
 import com.utils.RptUtils
-import org.apache.spark.api.java.JavaRDD
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SQLContext
@@ -47,9 +46,8 @@ object AppAnalysis {
 
       val requlist = RptUtils.request(requestmode, processnode)
       val clicklist = RptUtils.click(requestmode, iseffective)
-      val adlist: List[Double] = RptUtils.Ad(iseffective, isbilling, isbid, iswin, adorderid, WinPrice, adpayment).map(x => {
-        List[Double](x(0), x(1), x(2) * 1000, x(3) * 1000)
-      })
+      val adlist= RptUtils.Ad(iseffective, isbilling, isbid, iswin, adorderid, WinPrice, adpayment)
+
 
 
       (appid, appname, requlist ++ clicklist ++ adlist)

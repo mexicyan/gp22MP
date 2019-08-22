@@ -33,9 +33,7 @@ object netRpt {
 
       val requlist = RptUtils.request(requestmode,processnode)
       val clicklist = RptUtils.click(requestmode,iseffective)
-      val adlist: List[Double] = RptUtils.Ad(iseffective,isbilling,isbid,iswin,adorderid,WinPrice,adpayment).map(x=>{
-        List[Double](x(0),x(1),x(2)*1000,x(3)*1000)
-      })
+      val adlist: List[Double] = RptUtils.Ad(iseffective,isbilling,isbid,iswin,adorderid,WinPrice,adpayment)
 
 
       ((networkmannername),requlist++clicklist++adlist)
