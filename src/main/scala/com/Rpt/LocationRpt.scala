@@ -57,11 +57,8 @@ object LocationRpt {
       }).saveAsTextFile("dir/out/Localtion")
 
 
+    //存储到mysql中
       localRes.foreachPartition(data2MySQL)
-
-
-
-
 
   }
 
@@ -81,13 +78,6 @@ object LocationRpt {
   }
 
   //尝试使用连接池
-
-
-
-
-
-
-
 
   //之前学过的用法
 
